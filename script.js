@@ -332,7 +332,7 @@ var jsonTrueData = {
 var jsonData = jsonTrueData;
 
 /* Set the diagrams Height & Width */
-var height = 500,
+var height = 800,
     width = 960;
 
 var nodesArray = jsonData.nodes,
@@ -413,8 +413,9 @@ var force = d3.layout.force()
     .gravity(0.03)
     .on("tick", tick);
 
+/************** LINKS **************/
 
-var path = svg.append("svg:g").selectAll("path")
+var pathLink = svg.append("svg:g").selectAll("path")
     .data(force.links())
     .enter().append("svg:path")
     .attr("class", function (d) {
@@ -422,21 +423,43 @@ var path = svg.append("svg:g").selectAll("path")
     })
     .attr("marker-end", function (d) {
         return "url(#" + d.type + ")";
-    });
+    })
+    .attr("id", function (d, i) {
+        return "linkID_" + i;
+    });;
 
+//var labelText = svg.selectAll(".labelText")
+//    .data(force.links())
+//    .enter().append("text")
+//    .attr("class", "labelText")
+//    //    .attr("dx", 20)
+//    //    .attr("dy", 0)
+//    .style("fill", "red")
+//    .append("textPath")
+//    //    .attr("xlink:href", function (d, i) {
+//    //        return "#linkId_" + i;
+//    //    })
+//    .text("test");
 
-var node = svg.selectAll("node")
+/************** NODES **************/
+
+/*
+ * Node = <g><circle><image></g>
+ */
+var node = svg.append("svg:g").selectAll("node")
     .data(nodesArray)
     .attr("class", "node")
-    .enter().append("svg:g")
-var cir = node.append("circle").attr("cx", function (m) {
+    .enter().append("svg:g");
+
+var circleNode = node.append("circle").attr("cx", function (m) {
         return 0
     })
     .attr("cy", function (m) {
         return 0
     })
-    .attr("r", 14)
-var img = node.append("image")
+    .attr("r", 14);
+
+var imgNode = node.append("image")
     .attr("xlink:href", function (d) {
         var imgNode = "";
         if (d.type === "device") {
@@ -459,7 +482,7 @@ var img = node.append("image")
     .call(force.drag)
     .on("dblclick", click)
     .on("mouseover", function (d) {
-        path.style('stroke-width', function (l) {
+        pathLink.style('stroke-width', function (l) {
             if (d === l.source || d === l.target)
                 return 2;
             else
@@ -479,7 +502,7 @@ var img = node.append("image")
         });
     })
     .on("mouseout", function (d) {
-        path.style('stroke-width', 1.25);
+        pathLink.style('stroke-width', 1.25);
         node.classed("nodeOver", false);
         node.classed("neighborNodeOver", false);
         texts.classed("nodeOver", false);
@@ -487,14 +510,13 @@ var img = node.append("image")
     });
 
 
-var texts = svg.selectAll("text")
+/************** TEXT **************/
+
+var texts = svg.append("svg:g").selectAll("text")
     .data(nodesArray)
     .enter()
     .append("text")
-    .attr("class","label")
-    .attr("fill", "black")
-    .attr("font-family", "sans-serif")
-    .attr("font-size", "10px")
+    .attr("class", "label")
     .text(function (d) {
         return d.name;
     })
@@ -509,7 +531,7 @@ var texts = svg.selectAll("text")
         node.classed("neighborNodeOver", function (d2) {
             return neighboring(d, d2);
         });
-        path.style('stroke-width', function (l) {
+        pathLink.style('stroke-width', function (l) {
             if (d === l.source || d === l.target)
                 return 2;
             else
@@ -523,13 +545,33 @@ var texts = svg.selectAll("text")
         });
     })
     .on("mouseout", function (d) {
-        path.style('stroke-width', 1.25);
+        pathLink.style('stroke-width', 1.25);
         node.classed("nodeOver", false);
         node.classed("neighborNodeOver", false);
         texts.classed("nodeOver", false);
         texts.classed("neighborNodeOver", false);
     });
 
+var linktext = svg.append("svg:g").selectAll("g.linklabelholder").data(force.links());
+linktext.enter().append("g").attr("class", "linklabelholder")
+    .append("text")
+    .attr("class", "linklabel")
+    .style("font-size", "13px")
+    .attr("x", "50")
+    .attr("y", "-20")
+    .attr("text-anchor", "middle")
+    .append("textPath")
+    .attr("xlink:href", function (d, i) {
+        return "#linkID_" + i;
+    })
+    .text(function (d) {
+        if (nodeRoot === d.source || nodeRoot === d.target)
+            return d.type;
+        else
+            return "";
+    });
+
+/**************  **************/
 
 refreshNeighborMap(linksArray);
 
@@ -592,7 +634,7 @@ function tick(e) {
             }
         }));
 
-    path
+    pathLink
         .attr("d", function (d) {
             var dx = d.target.x - d.source.x,
                 dy = d.target.y - d.source.y,
@@ -616,6 +658,7 @@ function tick(e) {
             return d.target === nodeRoot;
         });
 
+
     texts
         .attr("transform", function (d) {
             return "translate(" + d.x + "," + (d.y - 15) + ")";
@@ -627,6 +670,13 @@ function tick(e) {
                 return 0.25;
 
         });
+
+    //    labelText
+    //        .attr("dx", 20)
+    //        .attr("dy", 0)
+    //        .attr("transform", function (d) {
+    //            return "translate(" + d.x + "," + d.y + ")";
+    //        })
 
 }
 
