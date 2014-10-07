@@ -398,8 +398,8 @@ svg.append("svg:defs").selectAll("marker")
     .enter().append("svg:marker")
     .attr("id", String)
     .attr("viewBox", "0 -5 10 10")
-    .attr("refX", 15)
-    .attr("refY", -1.5)
+    .attr("refX", 27)
+    .attr("refY", -2)
     .attr("markerWidth", 6)
     .attr("markerHeight", 6)
     .attr("orient", "auto")
@@ -425,187 +425,6 @@ var path = svg.append("svg:g").selectAll("path")
     });
 
 
-//var node = svg.selectAll("node")
-//    .data(nodesArray)
-//    .enter().append("svg")
-//    .attr("class", "node")
-//    //    .attr("width", 25)
-//    //    .attr("height", 25)
-//    .call(force.drag)
-//    .on("click", click)
-//    .on("mouseover", function (d) {
-//        path.style('stroke-width', function (l) {
-//            if (d === l.source || d === l.target)
-//                return 2;
-//            else
-//                return 1.25;
-//        });
-//        node.classed("nodeOver", function (d2) {
-//            return d === d2;
-//        });
-//        node.classed("neighborNodeOver", function (d2) {
-//            return neighboring(d, d2);
-//        });
-//        texts.classed("nodeOver", function (d2) {
-//            return d === d2;
-//        });
-//        texts.classed("neighborNodeOver", function (d2) {
-//            return neighboring(d, d2);
-//        });
-//
-//        d3.select(this)
-//            .style("fill", "yellow");
-//    })
-//    .on("mouseout", function (d) {
-//        path.style('stroke-width', 1.25);
-//        node.classed("nodeOver", false);
-//        node.classed("neighborNodeOver", false);
-//        texts.classed("nodeOver", false);
-//        texts.classed("neighborNodeOver", false);
-//    });
-//
-//var pathGroup = node.append("g")
-//    .attr("id", "groupOfPaths")
-//pathGroup.append("path")
-//    .attr("d", "M25, 60 C100, 0 25, -10 25, 15 C25, -10 -50, 0 25, 60 Z")
-//    .attr("stroke", "blue")
-//    .attr("stroke-width", 2)
-//    .attr("fill", "none");
-//pathGroup.append("path")
-//    .attr("d", "M55, 60 C100, 0 15, -10 25, 45 C25, -10 -50, 0 100, 60 Z")
-//    .attr("stroke", "blue")
-//    .attr("stroke-width", 2)
-//    .attr("fill", "none");
-//
-//var combinedD = "",
-//    combinedD2 = "";
-//
-//pathGroup.selectAll("path").each(function () {
-//    combinedD += d3.select(this).attr("d");
-//});
-//pathGroup.remove();
-//
-//var pathGroup2 = node.append("g")
-//    .attr("id", "groupOfPaths2")
-//pathGroup2.append("path")
-//    .attr("d", "M25, 60 C100, 0 25, -10 25, 15 C15, -10 -50, 0 25, -12 Z")
-//    .attr("stroke", "blue")
-//    .attr("stroke-width", 2)
-//    .attr("fill", "none");
-//pathGroup2.append("path")
-//    .attr("d", "M55, 60 C100, 0 15, -10 25, 45 C25, -10 -50, 0 100, 60 Z")
-//    .attr("stroke", "blue")
-//    .attr("stroke-width", 2)
-//    .attr("fill", "none");
-//pathGroup2.selectAll("path").each(function () {
-//    combinedD2 += d3.select(this).attr("d");
-//});
-//pathGroup2.remove();
-//
-//
-//var drawSVG = node.append("path")
-//    //    .attr("d", combinedD)
-//    //    .attr("stroke", "red")
-//    .attr("d", function (d) {
-//        if (d.type === "device") {
-//            return combinedD2;
-//        } else {
-//            return combinedD;
-//        }
-//    })
-//    .attr("stroke-width", 2)
-//    .attr("fill", "none")
-//    .on("mouseover", function (d) {
-//        path.style('stroke-width', function (l) {
-//            if (d === l.source || d === l.target)
-//                return 2;
-//            else
-//                return 1.25;
-//        });
-//        drawSVG.classed("nodeOver", function (d2) {
-//            return d === d2;
-//        });
-//        node.classed("neighborNodeOver", function (d2) {
-//            return neighboring(d, d2);
-//        });
-//        texts.classed("nodeOver", function (d2) {
-//            return d === d2;
-//        });
-//        texts.classed("neighborNodeOver", function (d2) {
-//            return neighboring(d, d2);
-//        });
-//
-//    });
-
-
-/*********/
-//var node = svg.selectAll("node")
-//    .data(nodesArray)
-//    .enter().append("svg:path")
-//    .attr("class", "node")
-//        .attr("d", d3.svg.symbol().type(function (d) {
-//         return getSymbolType(d.type);
-//     }).size(function (d) {
-//             if (d === nodeRoot) {
-//                 return 248;
-//             } else {
-//                 return 124;
-//             }
-//        }))
-//    //    .attr("d", "M0,-5L10,0L0,5")
-//    //    .attr("d", "M5,-2L10,0L2,5")
-////            .enter().append("svg:image")
-////        .attr("xlink:href", "device1.svg")
-////        .attr('x', -9)
-////        .attr('y', -12)
-////        .attr('width', 20)
-////        .attr('height', 24)
-//    .call(force.drag)
-//    .on("click", click)
-//    .on("mouseover", function (d) {
-//        path.style('stroke-width', function (l) {
-//            if (d === l.source || d === l.target)
-//                return 2;
-//            else
-//                return 1.25;
-//        });
-//                node.attr("d", d3.svg.symbol()
-//                    .type(function (d) {
-//                        return getSymbolType(d.type);
-//                    })
-//                    .size(function (d2) {
-//        //                if (d === d2) {
-//        //                    return 200;
-//        //                } else {
-//                            return 124;
-//        //                }
-//                    }));
-//        node.classed("nodeOver", function (d2) {
-//            return d === d2;
-//        });
-//        node.classed("neighborNodeOver", function (d2) {
-//            return neighboring(d, d2);
-//        });
-//        texts.classed("nodeOver", function (d2) {
-//            return d === d2;
-//        });
-//        texts.classed("neighborNodeOver", function (d2) {
-//            return neighboring(d, d2);
-//        });
-//
-//        //        d3.select(this)
-//        //            .style("fill", "yellow");
-//    })
-//    .on("mouseout", function (d) {
-//        path.style('stroke-width', 1.25);
-//        node.classed("nodeOver", false);
-//        node.classed("neighborNodeOver", false);
-//        texts.classed("nodeOver", false);
-//        texts.classed("neighborNodeOver", false);
-//    });
-/*********/
-
-/** IMAGE **/
 var node = svg.selectAll("node")
     .data(nodesArray)
     .attr("class", "node")
@@ -666,7 +485,6 @@ var img = node.append("image")
         texts.classed("nodeOver", false);
         texts.classed("neighborNodeOver", false);
     });
-/****/
 
 
 var texts = svg.selectAll("text")
@@ -754,11 +572,6 @@ force.start();
 
 function tick(e) {
 
-    //        drawSVG
-    //            .attr("transform", function (d) {
-    //                return "translate(" + (d.x) + "," + (d.y) + ")";
-    //            });
-
     node
         .attr("transform", function (d) {
             return "translate(" + (d.x) + "," + (d.y) + ")";
@@ -778,11 +591,6 @@ function tick(e) {
                 return 124;
             }
         }));
-
-    //    nodeSVG
-    //        .attr("transform", function (d) {
-    //            return "translate(" + (d.x) + "," + (d.y) + ")";
-    //        })
 
     path
         .attr("d", function (d) {
