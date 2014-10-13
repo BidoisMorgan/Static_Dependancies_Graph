@@ -524,11 +524,6 @@ var imgNode = node.append("image")
         imgNode.classed("nodeOver", function (d2) {
             return d === d2;
         });
-        //        circleNode.attr("transform", function (d2) {
-        //            if (d === d2) {
-        //                return "scale(2)";
-        //            }
-        //        });
         node.classed("nodeOver", function (d2) {
             return d2 === d;
         });
@@ -626,6 +621,14 @@ force
         var distanceTarget = customLinkDistanceDeepth(d.target, mapNeighborDeepth);
         console.log(Math.max(distanceSource, distanceTarget));
         return Math.max(distanceSource, distanceTarget);
+    })
+    .linkStrength(function (l) {
+        // Liens autour du root plus 'forts' que les autres plus relachés..
+        if (l.source === nodeRoot || l.target === nodeRoot) {
+            return 0.8;
+        } else {
+            return 0.3;
+        }
     })
     .charge(function (d) {
         if (d === nodeRoot) {
@@ -919,20 +922,20 @@ function customLinkDistanceDeepth(node, mapDeepNeighbor) {
     }
 }
 
-function customLinkDistanceDeepth2(node, mapDeepNeighbor) {
-    switch (getDeepthNeighbor2(node, mapDeepNeighbor)) {
-    case 0:
-        return -150;
-    case 1:
-        return -100;
-    case 2:
-        return -50;
-    case 3:
-        return -40;
-    default:
-        return -20;
-    }
-}
+//function customLinkDistanceDeepth2(node, mapDeepNeighbor) {
+//    switch (getDeepthNeighbor2(node, mapDeepNeighbor)) {
+//    case 0:
+//        return -150;
+//    case 1:
+//        return -100;
+//    case 2:
+//        return -50;
+//    case 3:
+//        return -40;
+//    default:
+//        return -20;
+//    }
+//}
 
 
 function getNeighbors(nodesArray, currentNode) {
