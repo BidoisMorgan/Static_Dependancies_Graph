@@ -403,7 +403,13 @@ svg.append("svg:defs").selectAll("marker")
     .enter().append("svg:marker")
     .attr("id", String)
     .attr("viewBox", "0 -5 10 10")
-    .attr("refX", 27)
+    .attr("refX", function (t) {
+        if (t === "targeting") {
+            return 38
+        } else {
+            return 28;
+        }
+    })
     .attr("refY", -2)
     .attr("markerWidth", 6)
     .attr("markerHeight", 6)
@@ -432,6 +438,7 @@ var pathLink = svg.append("svg:g").selectAll("path")
     .attr("id", function (d, i) {
         return "linkID_" + i;
     })
+    .attr("refX", -30)
     .on("mouseover", function (l1) {
         linktext.classed("hidden", function (l2) {
             if (l1 === l2) {
@@ -465,10 +472,12 @@ var pathLink = svg.append("svg:g").selectAll("path")
  * Node = <g><circle><image></g>
  */
 var node = svg.append("svg:g").selectAll("node")
-    .data(nodesArray)
-    .enter().append("svg:g")
+    .data(nodesArray);
+
+node.enter().append("svg:g")
     .attr("class", "node");
 
+//node.exit().remove();
 
 var circleNode = node.append("circle")
     .attr("class", "circleNode")
@@ -532,7 +541,7 @@ var imgNode = node.append("image")
         });
     })
     .on("mouseout", function (d) {
-//        pathLink.style('stroke-width', 1.25);
+        //        pathLink.style('stroke-width', 1.25);
         node.classed("nodeOver", false);
         node.classed("neighborNodeOver", false);
         texts.classed("nodeOver", false);
@@ -583,7 +592,7 @@ var texts = svg.append("svg:g").selectAll("text")
         });
     })
     .on("mouseout", function (d) {
-//        pathLink.style('stroke-width', 1.25);
+        //        pathLink.style('stroke-width', 1.25);
         node.classed("nodeOver", false);
         node.classed("neighborNodeOver", false);
         texts.classed("nodeOver", false);
@@ -966,3 +975,23 @@ function getSymbolType(type) {
     }
     return symbolType;
 }
+
+function removeNode() {
+    console.log("action");
+    //    var newNode = {
+    //        "id": "11111",
+    //        "name": "AAAA",
+    //        "type": "program"
+    //    };
+    //    nodesArray.push(newNode);
+
+    var a = nodesArray.pop();
+    force.nodes().shift();
+    //    console.log("node removed : %o", a);
+
+    node.exit().remove();
+    texts.exit().remove();
+
+}
+
+document.getElementById('btn').addEventListener("click", removeNode);
